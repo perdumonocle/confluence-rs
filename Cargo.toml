@@ -1,0 +1,19 @@
+[package]
+name = "confluence"
+version = "0.3.1"
+authors = ["Nerijus Arlauskas <nercury@gmail.com>"]
+description = "Access and modify Atlassian Confluence pages from Rust"
+license = "MIT"
+readme = "README.md"
+keywords = ["confluence", "atlassian", "api", "soap", "wiki"]
+categories = ["api-bindings"]
+
+[dependencies]
+xml-rs = "0.3"
+log = "0.3"
+hyper = "0.10"
+xmltree = "0.2"
+chrono = "0.2"
+
+[replace]
+"xml-rs:0.1.26" = { git = "https://github.com/perdumonocle/xml-rs-0.1.26.git" }
