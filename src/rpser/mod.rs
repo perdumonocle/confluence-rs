@@ -62,7 +62,7 @@ impl Response {
     /// Parse response from XML.
     pub fn from_xml(xml: &str) -> Result<Response> {
         let mut bytes = xml.as_bytes();
-        let mut element = Element::parse(&mut bytes);
+        let mut element = Element::parse(&mut bytes).unwrap();
 
         if element.name != "Envelope" {
             return Err(RpcError::UnexpectedElement { tag: element.name });

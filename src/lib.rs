@@ -19,11 +19,13 @@ and uses it when calling remote methods.
 The token will be destroyed (automatic logout) when `Session` goes out of scope.
 */
 
-#[macro_use] extern crate hyper;
+//#[macro_use] extern crate hyper;
+//extern crate hyper;
 #[macro_use] extern crate log;
 extern crate xml;
 extern crate xmltree;
 extern crate chrono;
+extern crate reqwest;
 
 pub mod http;
 pub mod wsdl;

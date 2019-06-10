@@ -1,4 +1,6 @@
-use chrono::{ DateTime, UTC };
+//use chrono::{ DateTime, UTC };
+use chrono::DateTime;
+use chrono::offset::Utc;
 
 /// Page.
 #[derive(Debug)]
@@ -18,11 +20,11 @@ pub struct Page {
 	/// The page content
     pub content: String,
     /// Timestamp page was created
-    pub created: DateTime<UTC>,
+    pub created: DateTime<Utc>,
     /// Username of the creator
     pub creator: String,
     /// Timestamp page was modified
-    pub modified: DateTime<UTC>,
+    pub modified: DateTime<Utc>,
     /// Username of the page's last modifier
     pub modifier: String,
     /// Whether or not this page is the space's homepage

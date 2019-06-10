@@ -1,7 +1,7 @@
 //! WSDL inspection helpers.
 
 use std::collections::HashMap;
-pub use xml::reader::{EventReader, XmlEvent};
+use xml::reader::{EventReader, XmlEvent};
 use http;
 
 /// WSDL operation info.

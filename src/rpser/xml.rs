@@ -3,7 +3,9 @@
 use xmltree::Element;
 use std::collections::HashMap;
 use std::num::ParseIntError;
-use chrono::{ DateTime, UTC, ParseError };
+//use chrono::{ DateTime, UTC, ParseError };
+use chrono::{ DateTime, ParseError };
+use chrono::offset::Utc;
 
 #[derive(Debug, PartialEq)]
 pub enum Error {
@@ -88,7 +90,7 @@ pub trait BuildElement {
     fn as_string(&self) -> Result<String, Error>;
 
     /// Extract the value of `DateTime` type from the text.
-    fn as_datetime(&self) -> Result<DateTime<UTC>, Error>;
+    fn as_datetime(&self) -> Result<DateTime<Utc>, Error>;
 }
 
 impl BuildElement for Element {
@@ -99,6 +101,9 @@ impl BuildElement for Element {
             attributes: self.attributes.clone(),
             children: self.children.iter().map(|child| child.cloned()).collect(),
             text: self.text.clone(),
+            namespace: self.namespace.clone(),
+            namespaces: self.namespaces.clone(),
+            prefix: self.prefix.clone(),
         }
     }
 
@@ -108,6 +113,9 @@ impl BuildElement for Element {
             attributes: HashMap::new(),
             children: Vec::new(),
             text: None,
+            namespace: None,
+            namespaces: None,
+            prefix: None,
         }
     }
 
@@ -151,7 +159,7 @@ impl BuildElement for Element {
 
     fn to_string(&self) -> String {
         let mut xml = Vec::new();
-        self.write(&mut xml);
+        self.write(&mut xml).unwrap();
         String::from_utf8_lossy(&xml).into_owned()
     }
 
@@ -223,9 +231,9 @@ impl BuildElement for Element {
         get_typed_string(self, "string")
     }
 
-    fn as_datetime(&self) -> Result<DateTime<UTC>, Error> {
+    fn as_datetime(&self) -> Result<DateTime<Utc>, Error> {
         let text = try!(get_typed_string(self, "dateTime"));
-        Ok(match text.parse::<DateTime<UTC>>() {
+        Ok(match text.parse::<DateTime<Utc>>() {
             Ok(ref value) => *value,
             Err(e) => return Err(Error::ParseDateTimeError { name: self.name.clone(), inner: e }),
         })
